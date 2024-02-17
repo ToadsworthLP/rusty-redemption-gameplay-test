@@ -1,0 +1,45 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://ck3dom2qq7fm2"]
+
+[ext_resource type="Texture2D" uid="uid://bmn5mrkv4a7p4" path="res://Sprites/Common/Spr_Soul_Broken.png" id="1_3mr6f"]
+[ext_resource type="Texture2D" uid="uid://c1cpfgtwae1ai" path="res://Sprites/Common/Spr_Soul.png" id="1_kfjwa"]
+[ext_resource type="Texture2D" uid="uid://bvuv5hr28o34o" path="res://Sprites/Common/Spr_Soul_LightDamage.png" id="2_usi85"]
+[ext_resource type="Texture2D" uid="uid://6b2jfvoxh1pv" path="res://Sprites/Common/Spr_Soul_HeavyDamage.png" id="4_yyy77"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kfjwa")
+}, {
+"duration": 0.25,
+"texture": ExtResource("2_usi85")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_yyy77")
+}, {
+"duration": 0.25,
+"texture": ExtResource("2_usi85")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kfjwa")
+}, {
+"duration": 2.0,
+"texture": ExtResource("1_3mr6f")
+}],
+"loop": false,
+"name": &"death",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kfjwa")
+}],
+"loop": false,
+"name": &"default",
+"speed": 1.0
+}]
