@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://jl1jic2vtca6"]
+
+[ext_resource type="Shader" path="res://Shaders/Common/Sh_UvScroll.gdshader" id="1_1m2ey"]
+
+[resource]
+shader = ExtResource("1_1m2ey")
+shader_parameter/scroll = Vector2(0.5, 0.25)
+shader_parameter/zoom = Vector2(1, 1)

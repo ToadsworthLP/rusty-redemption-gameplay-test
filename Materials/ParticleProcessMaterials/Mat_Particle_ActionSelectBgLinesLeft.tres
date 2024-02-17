@@ -1,0 +1,19 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://diq0188tn5mci"]
+
+[sub_resource type="Curve" id="Curve_hqwtx"]
+_data = [Vector2(1e-05, 1), 100000.0, 0.0, 1, 0, Vector2(1, 0), 0.0, 100000.0, 0, 1]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_roxl8"]
+texture_mode = 1
+curve = SubResource("Curve_hqwtx")
+
+[resource]
+particle_flag_disable_z = true
+spread = 0.0
+initial_velocity_min = 8.0
+initial_velocity_max = 8.0
+gravity = Vector3(32, 0, 0)
+scale_min = 2.0
+scale_max = 2.0
+alpha_curve = SubResource("CurveTexture_roxl8")

@@ -1,0 +1,587 @@
+[gd_scene load_steps=29 format=3 uid="uid://dyeyog8t0oegi"]
+
+[ext_resource type="Material" uid="uid://jl1jic2vtca6" path="res://Materials/Combat/Mat_ScrollingBattleBgBack.tres" id="1_1thvu"]
+[ext_resource type="Texture2D" uid="uid://cvkmy2gq44rxd" path="res://Temp/Spr_BattleTemplate.png" id="1_nqgfr"]
+[ext_resource type="Texture2D" uid="uid://cgdq37gbylbuo" path="res://Sprites/Common/Spr_WhitePixel.png" id="3_73fs2"]
+[ext_resource type="Material" uid="uid://c2t2g5q8j11ct" path="res://Materials/ParticleProcessMaterials/Mat_Particle_HpBarSparkles.tres" id="5_c3h8q"]
+[ext_resource type="FontFile" uid="uid://drfkefi4pokn0" path="res://Fonts/Fnt_TroubleBeneathTheDome.ttf" id="5_f3e5b"]
+[ext_resource type="Material" uid="uid://diq0188tn5mci" path="res://Materials/ParticleProcessMaterials/Mat_Particle_ActionSelectBgLinesLeft.tres" id="5_rni8l"]
+[ext_resource type="Texture2D" uid="uid://dyirmnptak8rb" path="res://Sprites/UI/Spr_Combat_ActionSelectLine.png" id="5_uaw61"]
+[ext_resource type="Material" uid="uid://b3wpj4bn1qe1m" path="res://Materials/Combat/Mat_ScrollingBattleBgFront.tres" id="6_3xip4"]
+[ext_resource type="Texture2D" uid="uid://c53k3u4yp6vn7" path="res://Sprites/UI/Spr_Combat_BgSquareTile.png" id="6_kvacc"]
+[ext_resource type="Texture2D" uid="uid://c1cpfgtwae1ai" path="res://Sprites/Common/Spr_Soul.png" id="6_l0qtg"]
+[ext_resource type="Material" uid="uid://kn6co2i6p2i0" path="res://Materials/ParticleProcessMaterials/Mat_Particle_ActionSelectBgLinesRight.tres" id="7_n3pq5"]
+[ext_resource type="Texture2D" uid="uid://dms5qsby1vqsv" path="res://Sprites/UI/Spr_UI_Combat_FightButton.png" id="8_anx8r"]
+[ext_resource type="Texture2D" uid="uid://btd3or0le0rhl" path="res://Sprites/UI/Spr_UI_Combat_FightButtonActive.png" id="9_mgwjy"]
+[ext_resource type="FontFile" uid="uid://dx7qqwcet8sha" path="res://Fonts/Fnt_DeterminationMono.woff" id="9_ojewv"]
+[ext_resource type="Texture2D" uid="uid://b67nqo0b28yx2" path="res://Sprites/UI/Spr_UI_Combat_ActButton.png" id="9_ooc43"]
+[ext_resource type="Texture2D" uid="uid://n3yt6t4v8ngn" path="res://Sprites/Combat/Spr_Combat_TrainingDummy.png" id="10_1xicx"]
+[ext_resource type="Texture2D" uid="uid://oxqoqe004swa" path="res://Sprites/UI/Spr_UI_Combat_ItemButton.png" id="10_dt7w3"]
+[ext_resource type="Texture2D" uid="uid://kplmxjfovgny" path="res://Sprites/UI/Spr_UI_Combat_MercyButton.png" id="11_cpkht"]
+[ext_resource type="Texture2D" uid="uid://di4t2myj0xn5p" path="res://Sprites/UI/Spr_UI_Combat_ActButtonActive.png" id="11_xaaom"]
+[ext_resource type="Texture2D" uid="uid://d24m1gav13ljd" path="res://Sprites/UI/Spr_UI_Combat_MendButton.png" id="12_jd5rb"]
+[ext_resource type="Texture2D" uid="uid://bqmovjjr4738d" path="res://Sprites/UI/Spr_UI_Combat_SwapButton.png" id="13_0nucm"]
+[ext_resource type="Texture2D" uid="uid://0ovclwmn4f53" path="res://Sprites/UI/Spr_UI_Combat_ItemButtonActive.png" id="13_q8a87"]
+[ext_resource type="Texture2D" uid="uid://dfdw3odhvba4h" path="res://Sprites/UI/Spr_UI_Combat_MercyButtonActive.png" id="15_mx2id"]
+[ext_resource type="Texture2D" uid="uid://cav8yo3jkhbwk" path="res://Sprites/UI/Spr_UI_Combat_FocusButtonActive.png" id="17_wki0u"]
+[ext_resource type="Script" path="res://Temp/Scr_ControlForceFocus.gd" id="18_vl346"]
+[ext_resource type="Texture2D" uid="uid://do7nnyjuj0qu2" path="res://Sprites/UI/Spr_UI_Combat_SwapButtonActive.png" id="19_re56a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbvb0"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rul7j"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 18.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+
+[node name="Main" type="Node"]
+
+[node name="BattleUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Control" parent="BattleUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BlackBG" type="ColorRect" parent="BattleUI/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BgSquares" type="Control" parent="BattleUI/Background"]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BgSquaresDark" type="TextureRect" parent="BattleUI/Background/BgSquares"]
+modulate = Color(0.113725, 0.0313726, 0.0588235, 1)
+material = ExtResource("1_1thvu")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_kvacc")
+stretch_mode = 1
+
+[node name="BgSquaresLight" type="TextureRect" parent="BattleUI/Background/BgSquares"]
+modulate = Color(0.188235, 0.0901961, 0.14902, 1)
+material = ExtResource("6_3xip4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_kvacc")
+stretch_mode = 1
+
+[node name="Template" type="TextureRect" parent="BattleUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_nqgfr")
+expand_mode = 1
+
+[node name="StatusLine" type="Control" parent="BattleUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = 160.0
+offset_right = 288.0
+offset_bottom = 176.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="KanakoName" type="Label" parent="BattleUI/StatusLine"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -279.0
+offset_top = -10.0
+offset_right = -183.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_f3e5b")
+theme_override_font_sizes/font_size = 24
+text = "Kanako"
+
+[node name="KanakoSoul" type="TextureRect" parent="BattleUI/StatusLine"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -8.0
+offset_right = -176.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_l0qtg")
+
+[node name="KanakoHpBar" type="TextureProgressBar" parent="BattleUI/StatusLine"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 75.0
+fill_mode = 1
+nine_patch_stretch = true
+texture_under = ExtResource("3_73fs2")
+texture_progress = ExtResource("3_73fs2")
+tint_under = Color(0.313726, 0.00392157, 0.0117647, 1)
+
+[node name="CloverName" type="Label" parent="BattleUI/StatusLine"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 186.0
+offset_top = -10.0
+offset_right = 282.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 0.137255, 1)
+theme_override_fonts/font = ExtResource("5_f3e5b")
+theme_override_font_sizes/font_size = 24
+text = "Clover"
+horizontal_alignment = 2
+
+[node name="CloverSoul" type="TextureRect" parent="BattleUI/StatusLine"]
+visible = false
+modulate = Color(1, 1, 0.0705882, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 176.0
+offset_top = -8.0
+offset_right = 192.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_l0qtg")
+
+[node name="CloverHpBar" type="TextureProgressBar" parent="BattleUI/StatusLine"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 96.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_73fs2")
+texture_progress = ExtResource("3_73fs2")
+tint_under = Color(0.313726, 0.00392157, 0.0117647, 1)
+tint_progress = Color(1, 1, 0.0705882, 1)
+
+[node name="KanakoHp" type="Label" parent="BattleUI/StatusLine"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -176.0
+offset_top = -10.0
+offset_right = -101.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_f3e5b")
+theme_override_font_sizes/font_size = 24
+text = "75%"
+horizontal_alignment = 2
+
+[node name="CloverHp" type="Label" parent="BattleUI/StatusLine"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 104.0
+offset_top = -10.0
+offset_right = 179.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 0.2, 1)
+theme_override_fonts/font = ExtResource("5_f3e5b")
+theme_override_font_sizes/font_size = 24
+text = "50%"
+
+[node name="TotalHp" type="Label" parent="BattleUI/StatusLine"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -10.0
+offset_right = 96.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_f3e5b")
+theme_override_font_sizes/font_size = 24
+text = "80/100"
+horizontal_alignment = 1
+
+[node name="KanakoActionSelect" type="Control" parent="BattleUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = 161.0
+offset_bottom = 235.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="BattleUI/KanakoActionSelect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -11.0
+offset_right = 144.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xbvb0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BattleUI/KanakoActionSelect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="FightButton" type="TextureButton" parent="BattleUI/KanakoActionSelect/PanelContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("8_anx8r")
+texture_pressed = ExtResource("8_anx8r")
+texture_hover = ExtResource("8_anx8r")
+texture_disabled = ExtResource("8_anx8r")
+texture_focused = ExtResource("9_mgwjy")
+stretch_mode = 0
+
+[node name="ActButton" type="TextureButton" parent="BattleUI/KanakoActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("9_ooc43")
+texture_pressed = ExtResource("9_ooc43")
+texture_hover = ExtResource("9_ooc43")
+texture_disabled = ExtResource("9_ooc43")
+texture_focused = ExtResource("11_xaaom")
+stretch_mode = 0
+
+[node name="ItemButton" type="TextureButton" parent="BattleUI/KanakoActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("10_dt7w3")
+texture_pressed = ExtResource("10_dt7w3")
+texture_hover = ExtResource("10_dt7w3")
+texture_disabled = ExtResource("10_dt7w3")
+texture_focused = ExtResource("13_q8a87")
+stretch_mode = 0
+
+[node name="MercyButton" type="TextureButton" parent="BattleUI/KanakoActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("11_cpkht")
+texture_pressed = ExtResource("11_cpkht")
+texture_hover = ExtResource("11_cpkht")
+texture_disabled = ExtResource("11_cpkht")
+texture_focused = ExtResource("15_mx2id")
+stretch_mode = 0
+
+[node name="FocusButton" type="TextureButton" parent="BattleUI/KanakoActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("12_jd5rb")
+texture_pressed = ExtResource("12_jd5rb")
+texture_hover = ExtResource("12_jd5rb")
+texture_disabled = ExtResource("12_jd5rb")
+texture_focused = ExtResource("17_wki0u")
+stretch_mode = 0
+script = ExtResource("18_vl346")
+
+[node name="SwapButton" type="TextureButton" parent="BattleUI/KanakoActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("13_0nucm")
+texture_pressed = ExtResource("13_0nucm")
+texture_hover = ExtResource("13_0nucm")
+texture_disabled = ExtResource("13_0nucm")
+texture_focused = ExtResource("19_re56a")
+stretch_mode = 0
+
+[node name="ActionSelectBackgroundLinesLeft" type="GPUParticles2D" parent="BattleUI/KanakoActionSelect"]
+position = Vector2(1, 50)
+amount = 4
+process_material = ExtResource("5_rni8l")
+texture = ExtResource("5_uaw61")
+lifetime = 1.25
+
+[node name="ActionSelectBackgroundLinesRight" type="GPUParticles2D" parent="BattleUI/KanakoActionSelect"]
+position = Vector2(287, 50)
+amount = 4
+process_material = ExtResource("7_n3pq5")
+texture = ExtResource("5_uaw61")
+lifetime = 1.25
+
+[node name="HpBarSeparatorParticles" type="GPUParticles2D" parent="BattleUI/KanakoActionSelect"]
+position = Vector2(286, 7)
+rotation = 3.14159
+amount = 24
+process_material = ExtResource("5_c3h8q")
+texture = ExtResource("3_73fs2")
+visibility_rect = Rect2(-10, -10, 10, 20)
+
+[node name="CloverActionSelect" type="Control" parent="BattleUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 161.0
+offset_right = 288.0
+offset_bottom = 235.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="BattleUI/CloverActionSelect"]
+self_modulate = Color(1, 1, 0.2, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -11.0
+offset_right = 144.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xbvb0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BattleUI/CloverActionSelect/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="FightButton" type="TextureButton" parent="BattleUI/CloverActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("8_anx8r")
+texture_pressed = ExtResource("8_anx8r")
+texture_hover = ExtResource("8_anx8r")
+texture_disabled = ExtResource("8_anx8r")
+texture_focused = ExtResource("9_mgwjy")
+stretch_mode = 0
+
+[node name="ActButton" type="TextureButton" parent="BattleUI/CloverActionSelect/PanelContainer/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("9_ooc43")
+texture_pressed = ExtResource("9_ooc43")
+texture_hover = ExtResource("9_ooc43")
+texture_disabled = ExtResource("9_ooc43")
+texture_focused = ExtResource("11_xaaom")
+stretch_mode = 0
+
+[node name="ItemButton" type="TextureButton" parent="BattleUI/CloverActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("10_dt7w3")
+texture_pressed = ExtResource("10_dt7w3")
+texture_hover = ExtResource("10_dt7w3")
+texture_disabled = ExtResource("10_dt7w3")
+texture_focused = ExtResource("13_q8a87")
+stretch_mode = 0
+
+[node name="MercyButton" type="TextureButton" parent="BattleUI/CloverActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("11_cpkht")
+texture_pressed = ExtResource("11_cpkht")
+texture_hover = ExtResource("11_cpkht")
+texture_disabled = ExtResource("11_cpkht")
+texture_focused = ExtResource("15_mx2id")
+stretch_mode = 0
+
+[node name="FocusButton" type="TextureButton" parent="BattleUI/CloverActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("12_jd5rb")
+texture_pressed = ExtResource("12_jd5rb")
+texture_hover = ExtResource("12_jd5rb")
+texture_disabled = ExtResource("12_jd5rb")
+texture_focused = ExtResource("17_wki0u")
+stretch_mode = 0
+
+[node name="SwapButton" type="TextureButton" parent="BattleUI/CloverActionSelect/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("13_0nucm")
+texture_pressed = ExtResource("13_0nucm")
+texture_hover = ExtResource("13_0nucm")
+texture_disabled = ExtResource("13_0nucm")
+texture_focused = ExtResource("19_re56a")
+stretch_mode = 0
+
+[node name="ActionSelectBackgroundLinesLeft" type="GPUParticles2D" parent="BattleUI/CloverActionSelect"]
+modulate = Color(1, 1, 0.2, 1)
+position = Vector2(1, 50)
+amount = 4
+process_material = ExtResource("5_rni8l")
+texture = ExtResource("5_uaw61")
+lifetime = 1.25
+
+[node name="ActionSelectBackgroundLinesRight" type="GPUParticles2D" parent="BattleUI/CloverActionSelect"]
+modulate = Color(1, 1, 0.2, 1)
+position = Vector2(287, 50)
+amount = 4
+process_material = ExtResource("7_n3pq5")
+texture = ExtResource("5_uaw61")
+lifetime = 1.25
+
+[node name="HpBarSeparatorParticles" type="GPUParticles2D" parent="BattleUI/CloverActionSelect"]
+modulate = Color(1, 1, 0.0705882, 1)
+position = Vector2(2, 7)
+amount = 24
+process_material = ExtResource("5_c3h8q")
+texture = ExtResource("3_73fs2")
+visibility_rect = Rect2(-10, -10, 10, 20)
+
+[node name="DialogBoxContainer" type="PanelContainer" parent="BattleUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = 10.0
+offset_right = 288.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rul7j")
+
+[node name="DialogBoxText" type="RichTextLabel" parent="BattleUI/DialogBoxContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("9_ojewv")
+theme_override_font_sizes/normal_font_size = 32
+text = "* A human SOUL.
+* A monster SOUL.
+* United as one, at last."
+tab_size = 2
+
+[node name="SprCombatTrainingDummy" type="Sprite2D" parent="."]
+position = Vector2(320, 166)
+scale = Vector2(2, 2)
+texture = ExtResource("10_1xicx")
