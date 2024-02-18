@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://5gmw0fm580vi"]
+
+[ext_resource type="Texture2D" uid="uid://cwffodh583ckd" path="res://Sprites/Combat/Spr_Combat_Knife.png" id="1_7tfjb"]
+[ext_resource type="Script" path="res://Scripts/Bullets/ThrowKnivesDownBullet.cs" id="2_rwmkw"]
+[ext_resource type="Material" uid="uid://b6rvvbci3cl3e" path="res://Materials/ParticleProcessMaterials/Mat_Particle_ThrowingKnifeTrail.tres" id="3_usr65"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p6edo"]
+size = Vector2(21, 5)
+
+[node name="Knife" type="Sprite2D" node_paths=PackedStringArray("collider")]
+z_index = 2
+rotation = 1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("1_7tfjb")
+script = ExtResource("2_rwmkw")
+fadeInDuration = 0.5
+throwSpeed = 1000.0
+lifetime = 3.0
+attack = 10
+destroyAtCollision = true
+collider = NodePath("Area2D")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(4.76837e-07, 0)
+process_material = ExtResource("3_usr65")
+texture = ExtResource("1_7tfjb")
+lifetime = 0.1
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_p6edo")

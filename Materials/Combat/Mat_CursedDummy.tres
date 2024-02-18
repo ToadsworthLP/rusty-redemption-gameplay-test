@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://l43mfoanycqw"]
+
+[ext_resource type="Shader" path="res://Shaders/Combat/Sh_CursedDummy.gdshader" id="1_8uhie"]
+[ext_resource type="Texture2D" uid="uid://7qkfinf3b2c1" path="res://Sprites/Combat/Spr_Combat_TrainingDummy_DisplacementMap.png" id="2_0de6e"]
+
+[resource]
+shader = ExtResource("1_8uhie")
+shader_parameter/displacementStrength = 0.025
+shader_parameter/horizontalAnimationSpeed = 2.0
+shader_parameter/verticalAnimationSpeed = 1.0
+shader_parameter/displacementMap = ExtResource("2_0de6e")

@@ -14,6 +14,8 @@ public partial class ArenaManager : Node2D, IEventHandler<CombatBeforeEnemyTurnE
 
     [Export] private Vector2 dialogBoxSize;
     [Export] private Vector2 arenaTargetSize;
+
+    [Export] private PackedScene attackScene;
     
     public override void _EnterTree()
     {
@@ -32,10 +34,8 @@ public partial class ArenaManager : Node2D, IEventHandler<CombatBeforeEnemyTurnE
         arenaSizeTween.TweenProperty(arenaVisuals, "custom_minimum_size", arenaTargetSize, arenaSizeChangeDuration);
         arenaSizeTween.TweenCallback(Callable.From(() =>
         {
-            
             Game.INSTANCE.EventBus.Post(new CombatEnemyTurnEvent());
-            
-            DummyAttack();
+            EnemyTurn();
         }));
     }
 
@@ -52,13 +52,9 @@ public partial class ArenaManager : Node2D, IEventHandler<CombatBeforeEnemyTurnE
         }));
     }
 
-    private void DummyAttack()
+    private void EnemyTurn()
     {
-        Tween t = GetTree().CreateTween();
-        t.TweenInterval(10.0);
-        t.TweenCallback(Callable.From(() =>
-        {
-            Game.INSTANCE.EventBus.Post(new CombatAfterEnemyTurnEvent());
-        }));
+        var scene = attackScene.Instantiate();
+        AddChild(scene);
     }
 }

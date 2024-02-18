@@ -17,6 +17,7 @@ public partial class ActionSelectButton : BaseButton
                 Game.INSTANCE.EventBus.Post(new CombatAfterPlayerTurnEvent());
                 break;
             case CombatAction.ACT:
+                Game.INSTANCE.EventBus.Post(new CombatAfterPlayerTurnEvent());
                 break;
             case CombatAction.ITEM:
                 break;

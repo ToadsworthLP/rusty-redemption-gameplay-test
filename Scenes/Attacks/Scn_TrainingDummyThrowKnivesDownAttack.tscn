@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://deo3d2agx0mra"]
+
+[ext_resource type="Script" path="res://Scripts/Attacks/TrainingDummyThrowKnivesDownAttack.cs" id="1_yytox"]
+[ext_resource type="PackedScene" uid="uid://5gmw0fm580vi" path="res://Scenes/Bullets/Scn_Bullet_Knife.tscn" id="2_0v8hm"]
+
+[node name="TrainingDummyThrowKnivesDownAttack" type="Node2D" node_paths=PackedStringArray("timer")]
+position = Vector2(320, 200)
+script = ExtResource("1_yytox")
+knifeScene = ExtResource("2_0v8hm")
+timer = NodePath("Timer")
+totalKnives = 10
+spawnerEdge1 = Vector2(-60, 0)
+spawnerEdge2 = Vector2(60, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5

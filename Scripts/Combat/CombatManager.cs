@@ -8,7 +8,7 @@ namespace RustyRedemption.Combat;
 public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEventHandler<CombatAfterPlayerTurnEvent>, IEventHandler<CombatPlayerTurnEvent>, IEventHandler<CombatActivateCharacterEvent>, IEventHandler<CombatTakeDamageEvent>, IEventHandler<CombatSoulDeteriorationEvent>
 {
     [Export] private PartyMember initialActivePartyMember;
-
+    
     public override void _EnterTree()
     {
         Game.INSTANCE.EventBus.AddHandler<CombatStartEvent>(this);

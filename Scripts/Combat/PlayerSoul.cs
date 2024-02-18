@@ -19,7 +19,8 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
     [Export] private Color kanakoColor;
     [Export] private Color cloverColor;
 
-    private bool active = false;
+    public bool Active { get; private set; }
+    
     private bool invincible = false;
     private float distanceTraveled = 0f;
 
@@ -36,7 +37,7 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
 
     public override void _PhysicsProcess(double delta)
     {
-        if(!active) return;
+        if(!Active) return;
 
         Vector2 initialPosition = Position;
         Velocity = GetNormalizedInput() * movementSpeed;
@@ -45,7 +46,7 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
         distanceTraveled += (Position - initialPosition).Length();
         HandleSoulDeterioration();
 
-        if(Input.IsPhysicalKeyPressed(Key.Q)) TakeDamage(50);
+        if(Input.IsPhysicalKeyPressed(Key.Q)) TakeDamage(40);
     }
 
     private Vector2 GetNormalizedInput()
@@ -65,14 +66,14 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
 
     public void Handle(CombatEnemyTurnEvent evt)
     {
-        active = true;
+        Active = true;
         invincible = false;
         distanceTraveled = 0;
     }
 
     public void Handle(CombatAfterEnemyTurnEvent evt)
     {
-        active = false;
+        Active = false;
     }
 
     public void Handle(CombatActivateCharacterEvent evt)
@@ -89,7 +90,7 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
 
     public void Handle(CombatTakeDamageEvent evt)
     {
-        if(invincible || !active) return;
+        if(invincible || !Active) return;
 
         soulSprite.Play(damageAnimationName);
         invincible = true;
@@ -107,12 +108,12 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
     {
         if(iFrameTimerTween != null && iFrameTimerTween.IsValid()) iFrameTimerTween.Kill();
         
-        active = false;
+        Active = false;
         soulSprite.Stop();
         soulSprite.Play(deathAnimationName);
     }
 
-    private void TakeDamage(int value)
+    public void TakeDamage(int value)
     {
         if(invincible) return;
 
