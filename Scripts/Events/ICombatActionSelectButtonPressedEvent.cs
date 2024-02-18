@@ -4,5 +4,5 @@ namespace RustyRedemption.Events;
 
 public interface ICombatActionSelectButtonPressedEvent
 {
-    PartyMember Source { get; set; }
+    PartyMembers Source { get; set; }
 }

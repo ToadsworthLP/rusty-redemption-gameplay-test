@@ -19,13 +19,13 @@ public partial class StatusBar : Control, IEventHandler<HealthUpdatedEvent>
 
     public override void _Ready()
     {
-        UpdateHealth(kanakoHealthLabel, kanakoHealthBar, Game.INSTANCE.PlayerState.GetHealth(PartyMember.KANAKO));
-        UpdateHealth(cloverHealthLabel, cloverHealthBar, Game.INSTANCE.PlayerState.GetHealth(PartyMember.CLOVER));
+        UpdateHealth(kanakoHealthLabel, kanakoHealthBar, Game.INSTANCE.PlayerState.GetHealth(PartyMembers.KANAKO));
+        UpdateHealth(cloverHealthLabel, cloverHealthBar, Game.INSTANCE.PlayerState.GetHealth(PartyMembers.CLOVER));
     }
 
     public void Handle(HealthUpdatedEvent evt)
     {
-        if(evt.PartyMember == PartyMember.KANAKO)
+        if(evt.PartyMember == PartyMembers.KANAKO)
             UpdateHealth(kanakoHealthLabel, kanakoHealthBar, evt.Value);
         else
             UpdateHealth(cloverHealthLabel, cloverHealthBar, evt.Value);

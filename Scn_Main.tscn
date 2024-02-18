@@ -1,9 +1,9 @@
-[gd_scene load_steps=44 format=3 uid="uid://dyeyog8t0oegi"]
+[gd_scene load_steps=53 format=3 uid="uid://dyeyog8t0oegi"]
 
 [ext_resource type="Material" uid="uid://jl1jic2vtca6" path="res://Materials/UI/Mat_ScrollingBattleBgBack.tres" id="1_1thvu"]
 [ext_resource type="Script" path="res://Scripts/Combat/CombatManager.cs" id="1_c1tuv"]
-[ext_resource type="Texture2D" uid="uid://cvkmy2gq44rxd" path="res://Temp/Spr_BattleTemplate.png" id="1_nqgfr"]
 [ext_resource type="Texture2D" uid="uid://cgdq37gbylbuo" path="res://Sprites/Common/Spr_WhitePixel.png" id="3_73fs2"]
+[ext_resource type="Texture2D" uid="uid://dnmnm6vy8a6hy" path="res://Temp/Spr_ActTemplate.png" id="5_5hkji"]
 [ext_resource type="Material" uid="uid://c2t2g5q8j11ct" path="res://Materials/ParticleProcessMaterials/Mat_Particle_HpBarSparkles.tres" id="5_c3h8q"]
 [ext_resource type="FontFile" uid="uid://drfkefi4pokn0" path="res://Fonts/Fnt_TroubleBeneathTheDome.ttf" id="5_f3e5b"]
 [ext_resource type="Material" uid="uid://diq0188tn5mci" path="res://Materials/ParticleProcessMaterials/Mat_Particle_ActionSelectBgLinesLeft.tres" id="5_rni8l"]
@@ -36,9 +36,18 @@
 [ext_resource type="Script" path="res://Scripts/Combat/ArenaManager.cs" id="30_ge8uh"]
 [ext_resource type="Script" path="res://Scripts/UI/GameOverScreen.cs" id="31_64hlv"]
 [ext_resource type="Script" path="res://Scripts/UI/TypewriterLabel.cs" id="31_tr67d"]
+[ext_resource type="Script" path="res://Scripts/UI/ActOptionSelectButton.cs" id="32_3jyrx"]
+[ext_resource type="Script" path="res://Scripts/UI/ActMenu.cs" id="32_cn8cl"]
 [ext_resource type="Material" uid="uid://l43mfoanycqw" path="res://Materials/Combat/Mat_CursedDummy.tres" id="32_ga0kb"]
+[ext_resource type="Material" uid="uid://c5uh4akdokebq" path="res://Materials/UI/Mat_FocusHeartWaves.tres" id="34_0m80q"]
+[ext_resource type="Texture2D" uid="uid://7t0uwxe3ny5n" path="res://Sprites/UI/Spr_UI_Combat_FocusHeart.png" id="34_6p1cw"]
+[ext_resource type="Material" uid="uid://dhpnsmjj0bylp" path="res://Materials/UI/Mat_FocusHeartWavesBackLayer.tres" id="34_cajhn"]
+[ext_resource type="Texture2D" uid="uid://ohi4dsgnq2wm" path="res://Sprites/UI/Spr_UI_Combat_FocusWave.png" id="34_lwkbp"]
+[ext_resource type="Script" path="res://Scripts/UI/FocusScreen.cs" id="34_nsqb8"]
+[ext_resource type="Texture2D" uid="uid://cm4g8kmivy550" path="res://Sprites/UI/Spr_UI_Combat_FocusHeartMask.png" id="35_ktbbd"]
 [ext_resource type="Script" path="res://Scripts/UI/EnemyTurnDarkOverlay.cs" id="35_l1ru0"]
 [ext_resource type="PackedScene" uid="uid://deo3d2agx0mra" path="res://Scenes/Attacks/Scn_TrainingDummyThrowKnivesDownAttack.tscn" id="37_mliwg"]
+[ext_resource type="SpriteFrames" uid="uid://j7l3h0hbfsal" path="res://Sprites/UI/Spr_UI_Combat_ZButton.tres" id="38_hwryn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbvb0"]
 bg_color = Color(0, 0, 0, 1)
@@ -127,7 +136,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_nqgfr")
+texture = ExtResource("5_5hkji")
 expand_mode = 1
 
 [node name="StatusBar" type="Control" parent="BattleUI" node_paths=PackedStringArray("kanakoHealthLabel", "kanakoHealthBar", "cloverHealthLabel", "cloverHealthBar")]
@@ -606,7 +615,7 @@ process_material = ExtResource("5_c3h8q")
 texture = ExtResource("3_73fs2")
 visibility_rect = Rect2(-10, -10, 10, 20)
 
-[node name="DialogBoxContainer" type="PanelContainer" parent="BattleUI" node_paths=PackedStringArray("text")]
+[node name="DialogBoxContainer" type="PanelContainer" parent="BattleUI"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -621,7 +630,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("27_ue4hc")
 script = ExtResource("28_e4geu")
-text = NodePath("DialogBoxText")
 
 [node name="DialogBoxText" type="RichTextLabel" parent="BattleUI/DialogBoxContainer"]
 layout_mode = 2
@@ -631,6 +639,230 @@ tab_size = 2
 visible_characters_behavior = 1
 script = ExtResource("31_tr67d")
 characterDelay = 0.025
+
+[node name="ActMenu" type="Control" parent="BattleUI" node_paths=PackedStringArray("defaultFocusedButton")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = 10.0
+offset_right = 288.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("32_cn8cl")
+defaultFocusedButton = NodePath("GridContainer/CheckOption/Button")
+
+[node name="DialogBoxContainer" type="PanelContainer" parent="BattleUI/ActMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -70.0
+offset_right = 288.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("27_ue4hc")
+
+[node name="GridContainer" type="GridContainer" parent="BattleUI/ActMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -49.0
+offset_right = 272.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="CheckOption" type="Control" parent="BattleUI/ActMenu/GridContainer"]
+custom_minimum_size = Vector2(252, 32)
+layout_mode = 2
+
+[node name="Button" type="TextureButton" parent="BattleUI/ActMenu/GridContainer/CheckOption"]
+layout_mode = 1
+offset_top = 7.0
+offset_right = 16.0
+offset_bottom = 23.0
+texture_hover = ExtResource("6_l0qtg")
+texture_focused = ExtResource("6_l0qtg")
+script = ExtResource("32_3jyrx")
+
+[node name="Label" type="Label" parent="BattleUI/ActMenu/GridContainer/CheckOption"]
+layout_mode = 1
+offset_left = 36.0
+offset_top = -1.0
+offset_right = 148.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("9_ojewv")
+theme_override_font_sizes/font_size = 32
+text = "* Check"
+
+[node name="TalkOption" type="Control" parent="BattleUI/ActMenu/GridContainer"]
+custom_minimum_size = Vector2(252, 32)
+layout_mode = 2
+
+[node name="Button" type="TextureButton" parent="BattleUI/ActMenu/GridContainer/TalkOption"]
+layout_mode = 1
+offset_top = 7.0
+offset_right = 16.0
+offset_bottom = 23.0
+texture_hover = ExtResource("6_l0qtg")
+texture_focused = ExtResource("6_l0qtg")
+script = ExtResource("32_3jyrx")
+option = 1
+
+[node name="Label" type="Label" parent="BattleUI/ActMenu/GridContainer/TalkOption"]
+layout_mode = 1
+offset_left = 36.0
+offset_top = -1.0
+offset_right = 148.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("9_ojewv")
+theme_override_font_sizes/font_size = 32
+text = "* Talk"
+
+[node name="FocusScreen" type="Control" parent="BattleUI" node_paths=PackedStringArray("waves", "heart", "pressButtonIcon")]
+visible = false
+clip_children = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -283.0
+offset_top = 15.0
+offset_right = 283.0
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("34_nsqb8")
+waves = NodePath("WavesMask/Waves")
+heart = NodePath("Heart")
+pressButtonIcon = NodePath("AnimatedSprite2D")
+wavesInitialPosition = Vector2(-7, 36)
+wavesTargetPosition = Vector2(-7, -44)
+timeLimit = 5.0
+percentagePerPress = 2.0
+
+[node name="ColorRect" type="ColorRect" parent="BattleUI/FocusScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="WavesMask" type="TextureRect" parent="BattleUI/FocusScreen"]
+clip_children = 1
+clip_contents = true
+layout_mode = 0
+offset_left = 242.0
+offset_top = 25.0
+offset_right = 324.0
+offset_bottom = 105.0
+texture = ExtResource("35_ktbbd")
+
+[node name="Waves" type="Control" parent="BattleUI/FocusScreen/WavesMask"]
+modulate = Color(1, 1, 0.137255, 1)
+clip_children = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -4.0
+offset_right = 48.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DarkLayer" type="TextureRect" parent="BattleUI/FocusScreen/WavesMask/Waves"]
+modulate = Color(0.756863, 0.756863, 0.756863, 1)
+material = ExtResource("34_cajhn")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -10.0
+offset_right = 48.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("34_lwkbp")
+stretch_mode = 1
+
+[node name="LightLayer" type="TextureRect" parent="BattleUI/FocusScreen/WavesMask/Waves"]
+material = ExtResource("34_0m80q")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -8.0
+offset_right = 48.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("34_lwkbp")
+stretch_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="BattleUI/FocusScreen/WavesMask/Waves"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = 4.0
+offset_right = 48.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Heart" type="TextureRect" parent="BattleUI/FocusScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -42.0
+offset_right = 45.0
+offset_bottom = 42.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("34_6p1cw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BattleUI/FocusScreen"]
+position = Vector2(277, 52)
+sprite_frames = ExtResource("38_hwryn")
+frame_progress = 0.837321
+centered = false
 
 [node name="GameOverScreen" type="Control" parent="."]
 visible = false
@@ -661,6 +893,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("10_1xicx")
 
 [node name="EnemyTurnDarkOverlay" type="ColorRect" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -745,8 +978,6 @@ soulSprite = NodePath("AnimatedSprite2D")
 defaultAnimationName = "default"
 damageAnimationName = "damage"
 deathAnimationName = "death"
-kanakoColor = Color(1, 1, 1, 1)
-cloverColor = Color(1, 1, 0.0156863, 1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Arena/PlayerSoul"]
 sprite_frames = ExtResource("29_i5dia")

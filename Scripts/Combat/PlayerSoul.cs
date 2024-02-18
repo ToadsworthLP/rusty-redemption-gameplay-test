@@ -16,8 +16,6 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
     [Export] private string defaultAnimationName;
     [Export] private string damageAnimationName;
     [Export] private string deathAnimationName;
-    [Export] private Color kanakoColor;
-    [Export] private Color cloverColor;
 
     public bool Active { get; private set; }
     
@@ -78,14 +76,7 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
 
     public void Handle(CombatActivateCharacterEvent evt)
     {
-        if (evt.Target == PartyMember.KANAKO)
-        {
-            Modulate = kanakoColor;
-        }
-        else
-        {
-            Modulate = cloverColor;
-        }
+        Modulate = PartyMemberData.Of(evt.Target).Color;
     }
 
     public void Handle(CombatTakeDamageEvent evt)

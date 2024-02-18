@@ -1,0 +1,18 @@
+[gd_resource type="SpriteFrames" load_steps=3 format=3 uid="uid://j7l3h0hbfsal"]
+
+[ext_resource type="Texture2D" uid="uid://bl0jproauy8mk" path="res://Sprites/UI/Spr_UI_Combat_ZButtonBlack.png" id="1_rofpc"]
+[ext_resource type="Texture2D" uid="uid://ce2kmua5tq3t0" path="res://Sprites/UI/Spr_UI_Combat_ZButtonWhite.png" id="2_h2pt1"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_rofpc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_h2pt1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]

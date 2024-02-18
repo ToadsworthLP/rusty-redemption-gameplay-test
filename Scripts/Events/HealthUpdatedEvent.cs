@@ -4,6 +4,6 @@ namespace RustyRedemption.Events;
 
 public class HealthUpdatedEvent
 {
-    public PartyMember PartyMember { get; set; }
+    public PartyMembers PartyMember { get; set; }
     public int Value { get; set; }
 }

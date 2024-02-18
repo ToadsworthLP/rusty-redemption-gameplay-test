@@ -5,7 +5,7 @@ using RustyRedemption.EventSystem;
 
 namespace RustyRedemption.UI;
 
-public partial class TypewriterLabel : RichTextLabel, IEventHandler<DialogBoxTextChangedEvent>
+public partial class TypewriterLabel : RichTextLabel, IEventHandler<DialogBoxTextChangedEvent>, IEventHandler<DialogBoxClearEvent>
 {
     [Export] private float characterDelay;
 
@@ -22,10 +22,11 @@ public partial class TypewriterLabel : RichTextLabel, IEventHandler<DialogBoxTex
         { '?', 1.25f },
         { ',', 1.25f }
     };
-
+    
     public override void _EnterTree()
     {
-        Game.INSTANCE.EventBus.AddHandler(this);
+        Game.INSTANCE.EventBus.AddHandler<DialogBoxTextChangedEvent>(this);
+        Game.INSTANCE.EventBus.AddHandler<DialogBoxClearEvent>(this);
     }
 
     public void Handle(DialogBoxTextChangedEvent evt)
@@ -77,5 +78,11 @@ public partial class TypewriterLabel : RichTextLabel, IEventHandler<DialogBoxTex
     private void OnFinished()
     {
         Game.INSTANCE.EventBus.Post(new DialogBoxTypingFinishedEvent());
+    }
+
+    public void Handle(DialogBoxClearEvent evt)
+    {
+        typing = false;
+        Text = string.Empty;
     }
 }

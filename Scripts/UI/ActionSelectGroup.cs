@@ -7,7 +7,7 @@ namespace RustyRedemption.UI;
 
 public partial class ActionSelectGroup : Control, IEventHandler<CombatActivateCharacterEvent>, IEventHandler<CombatAfterPlayerTurnEvent>
 {
-    [Export] private PartyMember partyMember;
+    [Export] private PartyMembers partyMember;
     [Export] private Control defaultFocusedButton;
 
     public override void _EnterTree()
@@ -19,7 +19,7 @@ public partial class ActionSelectGroup : Control, IEventHandler<CombatActivateCh
     public void Handle(CombatActivateCharacterEvent evt)
     {
         Visible = evt.Target == partyMember;
-        if(Visible) defaultFocusedButton.GrabFocus();
+        if (Visible) defaultFocusedButton.GrabFocus();
     }
 
     public void Handle(CombatAfterPlayerTurnEvent evt)

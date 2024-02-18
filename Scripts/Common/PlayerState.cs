@@ -5,22 +5,22 @@ namespace RustyRedemption.Common;
 
 public class PlayerState
 {
-    public  PartyMember ActivePartyMember { get; set; }
+    public  PartyMembers ActivePartyMember { get; set; }
     private int[] health;
 
     public PlayerState()
     {
         health = new int[2];
-        health[(int)PartyMember.KANAKO] = 50;
-        health[(int)PartyMember.CLOVER] = 50;
+        health[(int)PartyMembers.KANAKO] = 50;
+        health[(int)PartyMembers.CLOVER] = 50;
     }
 
-    public int GetHealth(PartyMember partyMember)
+    public int GetHealth(PartyMembers partyMember)
     {
         return health[(int)partyMember];
     }
 
-    public void SetHealth(PartyMember partyMember, int value)
+    public void SetHealth(PartyMembers partyMember, int value)
     {
         health[(int)partyMember] = value;
 

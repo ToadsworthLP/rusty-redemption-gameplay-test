@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dhpnsmjj0bylp"]
+
+[ext_resource type="Shader" path="res://Shaders/Combat/Sh_FocusHeartWaves.gdshader" id="1_be2rq"]
+
+[resource]
+shader = ExtResource("1_be2rq")
+shader_parameter/animationOffset = 1.0
+shader_parameter/verticalAnimationSpeed = 2.0
+shader_parameter/verticalAnimationStrength = 1.0
+shader_parameter/horizontalAnimationSpeed = 3.0
+shader_parameter/horizontalAnimationStrength = 2.0

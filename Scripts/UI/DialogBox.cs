@@ -6,8 +6,6 @@ namespace RustyRedemption.UI;
 
 public partial class DialogBox : Control, IEventHandler<CombatBeforeEnemyTurnEvent>, IEventHandler<CombatPlayerTurnEvent>
 {
-    [Export] private RichTextLabel text;
-
     public override void _EnterTree()
     {
         Game.INSTANCE.EventBus.AddHandler<CombatBeforeEnemyTurnEvent>(this);
@@ -22,6 +20,6 @@ public partial class DialogBox : Control, IEventHandler<CombatBeforeEnemyTurnEve
     public void Handle(CombatPlayerTurnEvent evt)
     {
         Visible = true;
-        Game.INSTANCE.EventBus.Post(new DialogBoxTextChangedEvent() { Text = "* A dummy blocks the way.", Instant = false });
+        Game.INSTANCE.EventBus.Post(new DialogBoxTextChangedEvent() { Text = "* You encountered the Dummy.", Instant = false });
     }
 }

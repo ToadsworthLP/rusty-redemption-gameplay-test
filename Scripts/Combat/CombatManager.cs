@@ -7,7 +7,7 @@ namespace RustyRedemption.Combat;
 
 public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEventHandler<CombatAfterPlayerTurnEvent>, IEventHandler<CombatPlayerTurnEvent>, IEventHandler<CombatActivateCharacterEvent>, IEventHandler<CombatTakeDamageEvent>, IEventHandler<CombatSoulDeteriorationEvent>
 {
-    [Export] private PartyMember initialActivePartyMember;
+    [Export] private PartyMembers initialActivePartyMember;
     
     public override void _EnterTree()
     {
@@ -37,7 +37,7 @@ public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEve
     
     public void Handle(CombatTakeDamageEvent evt)
     {
-        PartyMember partyMember = Game.INSTANCE.PlayerState.ActivePartyMember;
+        PartyMembers partyMember = Game.INSTANCE.PlayerState.ActivePartyMember;
         Game.INSTANCE.PlayerState.SetHealth(partyMember, Game.INSTANCE.PlayerState.GetHealth(partyMember) - evt.Value);
         
         if (Game.INSTANCE.PlayerState.GetHealth(partyMember) <= 0)
@@ -51,8 +51,8 @@ public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEve
 
     public void Handle(CombatSoulDeteriorationEvent evt)
     {
-        PartyMember target = Game.INSTANCE.PlayerState.ActivePartyMember;
-        PartyMember other = target == PartyMember.KANAKO ? PartyMember.CLOVER : PartyMember.KANAKO;
+        PartyMembers target = Game.INSTANCE.PlayerState.ActivePartyMember;
+        PartyMembers other = target == PartyMembers.KANAKO ? PartyMembers.CLOVER : PartyMembers.KANAKO;
 
         int targetHealth = Game.INSTANCE.PlayerState.GetHealth(target);
         int otherHealth = Game.INSTANCE.PlayerState.GetHealth(other);
