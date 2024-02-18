@@ -22,5 +22,6 @@ public partial class DialogBox : Control, IEventHandler<CombatBeforeEnemyTurnEve
     public void Handle(CombatPlayerTurnEvent evt)
     {
         Visible = true;
+        Game.INSTANCE.EventBus.Post(new DialogBoxTextChangedEvent() { Text = "* A dummy blocks the way.", Instant = false });
     }
 }

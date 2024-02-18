@@ -1,9 +1,10 @@
 ﻿using Godot;
 using RustyRedemption.Events;
+using RustyRedemption.EventSystem;
 
 namespace RustyRedemption.Attacks;
 
-public partial class TrainingDummyThrowKnivesDownAttack : Node2D
+public partial class TrainingDummyThrowKnivesDownAttack : Node2D, IEventHandler<CombatPlayerDiedEvent>
 {
     [Export] private PackedScene knifeScene;
     [Export] private int totalKnives;
@@ -13,7 +14,12 @@ public partial class TrainingDummyThrowKnivesDownAttack : Node2D
     private Timer timer;
     private RandomNumberGenerator rng;
     private int spawnedKnives = 0;
-    
+
+    public override void _EnterTree()
+    {
+        Game.INSTANCE.EventBus.AddHandler(this);
+    }
+
     public override void _Ready()
     {
         rng = new RandomNumberGenerator();
@@ -31,9 +37,13 @@ public partial class TrainingDummyThrowKnivesDownAttack : Node2D
             }
             else
             {
+                timer.Stop();
+                
                 SceneTreeTimer endTimer = GetTree().CreateTimer(1.5f);
                 endTimer.Timeout += () =>
                 {
+                    if(!IsInstanceValid(this)) return;
+                    
                     Game.INSTANCE.EventBus.Post(new CombatAfterEnemyTurnEvent());
                     QueueFree();
                 };
@@ -48,5 +58,11 @@ public partial class TrainingDummyThrowKnivesDownAttack : Node2D
         var instance = knifeScene.Instantiate<Node2D>();
         instance.Position = position;
         AddChild(instance);
+    }
+
+    public void Handle(CombatPlayerDiedEvent evt)
+    {
+        timer.Stop();
+        QueueFree();
     }
 }

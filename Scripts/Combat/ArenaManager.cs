@@ -23,6 +23,11 @@ public partial class ArenaManager : Node2D, IEventHandler<CombatBeforeEnemyTurnE
         Game.INSTANCE.EventBus.AddHandler<CombatAfterEnemyTurnEvent>(this);
     }
 
+    public override void _Ready()
+    {
+        Visible = false;
+    }
+
     public void Handle(CombatBeforeEnemyTurnEvent evt)
     {
         Visible = true;

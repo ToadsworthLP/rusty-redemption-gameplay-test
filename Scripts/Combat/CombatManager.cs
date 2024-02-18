@@ -21,6 +21,7 @@ public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEve
 
     public void Handle(CombatStartEvent evt)
     {
+        Game.INSTANCE.EventBus.Post(new CombatPlayerTurnEvent());
         Game.INSTANCE.EventBus.Post(new CombatActivateCharacterEvent { Target = initialActivePartyMember });
     }
 
