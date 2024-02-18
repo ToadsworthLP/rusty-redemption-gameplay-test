@@ -5,7 +5,7 @@ using RustyRedemption.EventSystem;
 
 namespace RustyRedemption.Combat;
 
-public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEventHandler<CombatAfterPlayerTurnEvent>, IEventHandler<CombatPlayerTurnEvent>, IEventHandler<CombatActivateCharacterEvent>, IEventHandler<CombatTakeDamageEvent>, IEventHandler<CombatSoulDeteriorationEvent>
+public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEventHandler<CombatAfterPlayerTurnEvent>, IEventHandler<CombatPlayerTurnEvent>, IEventHandler<CombatActivateCharacterEvent>, IEventHandler<CombatTakeDamageEvent>, IEventHandler<CombatSoulDeteriorationEvent>, IEventHandler<CombatSoulFocusEvent>
 {
     [Export] private PartyMembers initialActivePartyMember;
     
@@ -17,6 +17,7 @@ public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEve
         Game.INSTANCE.EventBus.AddHandler<CombatTakeDamageEvent>(this);
         Game.INSTANCE.EventBus.AddHandler<CombatActivateCharacterEvent>(this);
         Game.INSTANCE.EventBus.AddHandler<CombatSoulDeteriorationEvent>(this);
+        Game.INSTANCE.EventBus.AddHandler<CombatSoulFocusEvent>(this);
     }
 
     public void Handle(CombatStartEvent evt)
@@ -52,7 +53,7 @@ public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEve
     public void Handle(CombatSoulDeteriorationEvent evt)
     {
         PartyMembers target = Game.INSTANCE.PlayerState.ActivePartyMember;
-        PartyMembers other = target == PartyMembers.KANAKO ? PartyMembers.CLOVER : PartyMembers.KANAKO;
+        PartyMembers other = PartyMemberData.GetOpposite(target);
 
         int targetHealth = Game.INSTANCE.PlayerState.GetHealth(target);
         int otherHealth = Game.INSTANCE.PlayerState.GetHealth(other);
@@ -64,5 +65,17 @@ public partial class CombatManager : Node, IEventHandler<CombatStartEvent>, IEve
             if(otherHealth + evt.Value <= 100)
                 Game.INSTANCE.PlayerState.SetHealth(other, otherHealth + evt.Value);
         }
+    }
+
+    public void Handle(CombatSoulFocusEvent evt)
+    {
+        PartyMembers source = Game.INSTANCE.PlayerState.ActivePartyMember;
+        PartyMembers target = PartyMemberData.GetOpposite(source);
+        
+        int sourceHealth = Game.INSTANCE.PlayerState.GetHealth(source);
+        int targetHealth = Game.INSTANCE.PlayerState.GetHealth(target);
+        
+        Game.INSTANCE.PlayerState.SetHealth(source, sourceHealth - evt.Value);
+        Game.INSTANCE.PlayerState.SetHealth(target, targetHealth + evt.Value);
     }
 }

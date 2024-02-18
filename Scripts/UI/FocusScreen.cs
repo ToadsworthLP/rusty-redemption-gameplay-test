@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using System;
+using Godot;
 using RustyRedemption.Common;
 using RustyRedemption.Events;
 using RustyRedemption.EventSystem;
@@ -10,6 +11,7 @@ public partial class FocusScreen : Control, IEventHandler<CombatFocusSelectedEve
     [Export] private Control waves;
     [Export] private Control heart;
     [Export] private AnimatedSprite2D pressButtonIcon;
+    [Export] private Control finishBrightPart;
     
     [Export] private Vector2 wavesInitialPosition;
     [Export] private Vector2 wavesTargetPosition;
@@ -43,25 +45,22 @@ public partial class FocusScreen : Control, IEventHandler<CombatFocusSelectedEve
     {
         currentProgress = 0f;
 
-        Color wavesTargetColor = PartyMemberData.Of(evt.Source).Color;
-        Color wavesTransparentColor = PartyMemberData.Of(evt.Source).Color;
-        wavesTransparentColor.A = 0f;
-
-        Color heartTargetColor = PartyMemberData.OfOpposite(evt.Source).Color;
-        Color heartTransparentColor = PartyMemberData.OfOpposite(evt.Source).Color;
-        heartTransparentColor.A = 0f;
+        Color targetColor = PartyMemberData.Of(evt.Source).Color;
+        Color transparentColor = PartyMemberData.Of(evt.Source).Color;
+        transparentColor.A = 0f;
         
         waves.Position = wavesInitialPosition;
-        waves.Modulate = wavesTransparentColor;
-        heart.Modulate = heartTransparentColor;
+        waves.Modulate = transparentColor;
+        heart.Modulate = transparentColor;
+        finishBrightPart.Modulate = transparentColor;
         pressButtonIcon.Visible = false;
         
         Visible = true;
 
         Tween tween = GetTree().CreateTween();
         tween.TweenInterval(0.2f);
-        tween.TweenProperty(waves, "modulate", wavesTargetColor, 0.2f);
-        tween.Parallel().TweenProperty(heart, "modulate", heartTargetColor, 0.2f);
+        tween.TweenProperty(waves, "modulate", targetColor, 0.2f);
+        tween.Parallel().TweenProperty(heart, "modulate", targetColor, 0.2f);
         tween.TweenInterval(0.2f);
         tween.TweenCallback(Callable.From(() =>
         {
@@ -75,23 +74,18 @@ public partial class FocusScreen : Control, IEventHandler<CombatFocusSelectedEve
             active = false;
             pressButtonIcon.Visible = false;
         }));
-        tween.TweenProperty(waves, "modulate", wavesTransparentColor, 0.2f);
-        tween.Parallel().TweenProperty(heart, "modulate", heartTransparentColor, 0.2f);
+        tween.TweenProperty(finishBrightPart, "modulate", targetColor, 0.025f);
+        tween.TweenProperty(waves, "modulate", transparentColor, 0.0f);
+        tween.Parallel().TweenProperty(heart, "modulate", transparentColor, 0.2f);
+        tween.Parallel().TweenProperty(finishBrightPart, "modulate", transparentColor, 0.2f);
         tween.TweenInterval(0.2f);
         tween.TweenCallback(Callable.From(() =>
         {
             Visible = false;
-
-            float transferValue = Game.INSTANCE.PlayerState.GetHealth(evt.Source) * currentProgress;
-            int roundedValue = Mathf.RoundToInt(transferValue);
+            int transferValue = CalculateTransferAmount(Game.INSTANCE.PlayerState.GetHealth(evt.Source), Game.INSTANCE.PlayerState.GetHealth(PartyMemberData.GetOpposite(evt.Source)), currentProgress);
             
-            Game.INSTANCE.EventBus.Post(new DialogBoxTextChangedEvent() {Instant = false, Text = $"* You focus on your souls.      \n* Transferred {roundedValue}% HP!"});
-
-            PartyMembers target = PartyMemberData.GetOpposite(evt.Source);
-            
-            // TODO actually apply transfer
-            // TODO make sure at least 1% HP remains
-            // TODO this doesn't belong here but fix HP bar particle effects vanishing during enemy turn
+            Game.INSTANCE.EventBus.Post(new DialogBoxTextChangedEvent() {Instant = false, Text = $"* You focus on your souls.      \n* Transferred {transferValue}% HP!"});
+            Game.INSTANCE.EventBus.Post(new CombatSoulFocusEvent() { Value = transferValue });
         }));
         tween.TweenInterval(4.0f);
         tween.TweenCallback(Callable.From(() =>
@@ -103,5 +97,15 @@ public partial class FocusScreen : Control, IEventHandler<CombatFocusSelectedEve
     private void UpdateWavePosition(float progress)
     {
         waves.Position = wavesInitialPosition.Lerp(wavesTargetPosition, progress);
+    }
+
+    private int CalculateTransferAmount(int sourceHealth, int targetHealth, float multiplier)
+    {
+        int amount = Mathf.RoundToInt(sourceHealth * multiplier);
+        
+        if (sourceHealth - amount <= 1) amount = sourceHealth - 1;
+        if (targetHealth + amount > 100) amount = 100 - targetHealth;
+        
+        return amount;
     }
 }
