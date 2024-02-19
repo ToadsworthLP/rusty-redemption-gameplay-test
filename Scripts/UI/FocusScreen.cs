@@ -84,7 +84,7 @@ public partial class FocusScreen : Control, IEventHandler<CombatFocusSelectedEve
             Visible = false;
             int transferValue = CalculateTransferAmount(Game.INSTANCE.PlayerState.GetHealth(evt.Source), Game.INSTANCE.PlayerState.GetHealth(PartyMemberData.GetOpposite(evt.Source)), currentProgress);
             
-            Game.INSTANCE.EventBus.Post(new DialogBoxTextChangedEvent() {Instant = false, Text = $"* You focus on your souls.      \n* Transferred {transferValue}% HP!"});
+            Game.INSTANCE.EventBus.Post(new DialogBoxTextChangedEvent() {Instant = false, Text = $"* You focus on your SOULs.      \n* Transferred {transferValue}% HP!"});
             Game.INSTANCE.EventBus.Post(new CombatSoulFocusEvent() { Value = transferValue });
         }));
         tween.TweenInterval(4.0f);
