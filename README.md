@@ -1,1 +1,5 @@
-# RustyRedemption
+# Undertale Yellow: Rusty Redemption Gameplay Test
+
+This repository contains a bare-bones prototype of a combat system inspired by the Undertale Yellow: Rusty Redemption AU created by @EldritchDream_
+
+It's based on Undertale's combat with a bit of inspiration from Deltarune, but only contains a single enemy attack, as well as the "ACT", "FOCUS" and "SWAP" commands, while everything else has been left out for now since I only implemented what I needed to test whether the ideas that were floating around my head were actually fun. Due to these limitations, it's not actually very interesting to play, even though it is technically playable (depending on your definition of playable). For this reason, I decided against a downloadable release, but if you really, really want to play it, you could always clone the repo and open it in Godot. If you do decide to take a look at the code, however, please keep in mind that this was hacked together in just 4 days in Godot 4.2.1, so the code quality is...not exactly great.
