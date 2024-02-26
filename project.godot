@@ -32,7 +32,8 @@ project/assembly_name="RustyRedemption"
 
 [editor]
 
-movie_writer/movie_file="D:/Temp/RenderOut/WhatAmICooking.png"
+movie_writer/mjpeg_quality=0.95
+movie_writer/movie_file="D:/Temp/RustyRedemption/FlippedMonsterSoul/flipped.png"
 movie_writer/disable_vsync=true
 
 [input]

@@ -705,6 +705,7 @@ offset_right = 16.0
 offset_bottom = 23.0
 texture_hover = ExtResource("6_l0qtg")
 texture_focused = ExtResource("6_l0qtg")
+flip_v = true
 script = ExtResource("32_3jyrx")
 
 [node name="Label" type="Label" parent="BattleUI/ActMenu/GridContainer/CheckOption"]
@@ -728,6 +729,7 @@ offset_right = 16.0
 offset_bottom = 23.0
 texture_hover = ExtResource("6_l0qtg")
 texture_focused = ExtResource("6_l0qtg")
+flip_v = true
 script = ExtResource("32_3jyrx")
 option = 1
 

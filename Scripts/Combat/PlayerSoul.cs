@@ -77,6 +77,7 @@ public partial class PlayerSoul : CharacterBody2D, IEventHandler<CombatEnemyTurn
     public void Handle(CombatActivateCharacterEvent evt)
     {
         Modulate = PartyMemberData.Of(evt.Target).Color;
+        soulSprite.FlipV = evt.Target == PartyMembers.KANAKO;
     }
 
     public void Handle(CombatTakeDamageEvent evt)
